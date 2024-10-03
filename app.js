@@ -19,6 +19,21 @@ mongoose
     console.error("MongoDB connection error:", err.message);
   });
 
+  app.get('/dashboard', (req, res) => {
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>Dashboard</title>
+      </head>
+      <body>
+          <h1>Welcome to the Dashboard</h1>
+          <p>This is the dashboard page.</p>
+      </body>
+      </html>
+    `);
+  });  
+
 // Create User model
 
 // GET route to fetch user data
