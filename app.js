@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const OrderModel = require("./models/Order"); // Ensure the path is correct
+const allItems = require('./data/menu');
 require('dotenv').config(); // Uncomment if using environment variables
 
 app.use(cors());
