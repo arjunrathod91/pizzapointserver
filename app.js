@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-const OrderModel = require("./models/Order"); // Ensure the path is correct
+const MenuModel = require("./models/Menu"); // Ensure the path is correct
 const allItems = require('./data/menu');
 require('dotenv').config(); // Uncomment if using environment variables
 
@@ -24,9 +24,9 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   });
 
 // Route to get all orders
-app.get('/orders', async (req, res) => {
+app.get('/allItems', async (req, res) => {
   try {
-    const orders = await OrderModel.find();
+    const orders = await MenuModel.find();
     res.json(orders);
   } catch (error) {
     console.error('Error fetching orders:', error); // Log the error for debugging

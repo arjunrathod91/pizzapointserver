@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const OrderModel = require("./models/Order");
+const MenuModel = require("./models/Menu");
 const allItems = require("./data/menu");
 
 require('dotenv').config();
@@ -11,13 +11,13 @@ const seedDB = async () => {
     await mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log("Connected to MongoDB for seeding.");
 
-    const existingItems = await OrderModel.find({ name: { $in: allItems.map(item => item.name) } });
+    const existingItems = await MenuModel.find({ name: { $in: allItems.map(item => item.name) } });
     const existingNames = existingItems.map(item => item.name);
 
     const itemsToInsert = allItems.filter(item => !existingNames.includes(item.name));
 
     if (itemsToInsert.length > 0) {
-      await OrderModel.insertMany(itemsToInsert);
+      await MenuModel.insertMany(itemsToInsert);
       console.log(`${itemsToInsert.length} menu items inserted successfully.`);
     } else {
       console.log("All menu items already exist. Skipping insertion.");

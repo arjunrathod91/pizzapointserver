@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const OrderSchema = new mongoose.Schema({
+const MenuSchema = new mongoose.Schema({
   name:{
     type: String,
   },
@@ -27,6 +27,6 @@ const OrderSchema = new mongoose.Schema({
   }
 });
 
-const OrderModel = mongoose.model("orders", OrderSchema);
+const MenuModel = mongoose.model("allItems", MenuSchema);
 
-module.exports = OrderModel;
+module.exports = MenuModel;
