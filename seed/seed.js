@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const MenuModel = require("./models/Menu");
-const allItems = require("./data/menu");
+const MenuModel = require("../models/Menu");
+const allItems = require("../data/menu");
 
 require('dotenv').config();
 
