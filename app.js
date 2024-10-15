@@ -5,6 +5,7 @@ const app = express();
 const MenuModel = require("./models/Menu");
 const UserModel = require("./models/User");
 const allItems = require("./data/menu");
+const { Password } = require("@mui/icons-material");
 require("dotenv").config();
 
 app.use(cors());
@@ -52,10 +53,26 @@ app.get("/userDetail", async (req, res) => {
     res.json(user);
     console.log(user);
   } catch (error) {
-    console.error("Error:", error); // Log the error for debugging
+    console.error("Error:", error);
     res
       .status(500)
       .json({ message: "Error", error: error.message });
+  }
+});
+
+app.put("/userDetail", async (req, res) => {
+  try {
+    const { email, password, cart } = req.body;
+    const user = await UserModel.findOne({ email, password });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.cart = cart;
+    await user.save();
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
   }
 });
 
