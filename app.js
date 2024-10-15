@@ -71,8 +71,10 @@ app.put("/userDetail", async (req, res) => {
     await user.save();
     res.status(200).json(user);
   } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ message: "Error", error: error.message });
   }
 });
 
