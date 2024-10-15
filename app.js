@@ -60,21 +60,21 @@ app.get("/userDetail", async (req, res) => {
   }
 });
 
-app.put("/userDetail", async (req, res) => {
-  try {
-    const { email, password, cart } = req.body;
-    const user = await UserModel.findOne({ email, password });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    user.cart = cart;
-    await user.save();
-    res.status(200).json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
-  }
-});
+// app.put("/userDetail", async (req, res) => {
+//   try {
+//     const { email, password, cart } = req.body;
+//     const user = await UserModel.findOne({ email, password });
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+//     user.cart = cart;
+//     await user.save();
+//     res.status(200).json(user);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json(error);
+//   }
+// });
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
