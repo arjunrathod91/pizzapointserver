@@ -53,11 +53,28 @@ app.post("/userDetail", (req, res) => {
   }
 });
 
+//login
+
+// app.post("/login", (req, res) => {
+//   try {
+//     const profileDetails = req.body;
+//     // console.log("Received profile details:", profileDetails);
+//     // UserModel.create(profileDetails);
+//     // UserModel.inserprotMany(profileDetails)
+//   } catch (error) {
+//     console.error("Error", error); // Log the error for debugging
+//     res
+//       .status(500)
+//       .json({ message: "Error", error: error.message });
+//   }
+// });
+
 
 app.get("/userDetail", async (req, res) => {
   try {
     const user = await UserModel.find();
     res.json(user);
+    console.log(user);
   } catch (error) {
     console.error("Error:", error); // Log the error for debugging
     res
