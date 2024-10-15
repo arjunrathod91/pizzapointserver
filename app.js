@@ -60,35 +60,16 @@ app.get("/userDetail", async (req, res) => {
   }
 });
 
-//for cart
+//for order
 
 app.put("/userDetail", async (req, res) => {
   try {
-    const { email, password, cart } = req.body;
+    const { email, password,cart, order } = req.body;
     const user = await UserModel.findOne({ email, password });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     user.cart = cart;
-    await user.save();
-    res.status(200).json(user);
-  } catch (error) {
-    console.error("Error:", error);
-    res
-      .status(500)
-      .json({ message: "Error", error: error.message });
-  }
-});
-
-//for order
-
-app.put("/userDetail", async (req, res) => {
-  try {
-    const { email, password, order } = req.body;
-    const user = await UserModel.findOne({ email, password });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
     user.order = order;
     await user.save();
     res.status(200).json(user);
