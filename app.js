@@ -46,6 +46,19 @@ app.post("/userDetail", (req, res) => {
   }
 });
 
+app.get("/userDetail", async (req, res) => {
+  try {
+    const user = await UserModel.find();
+    res.json(user);
+    console.log(user);
+  } catch (error) {
+    console.error("Error:", error); // Log the error for debugging
+    res
+      .status(500)
+      .json({ message: "Error", error: error.message });
+  }
+});
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
