@@ -18,6 +18,9 @@ const UserSchema = new mongoose.Schema({
   },
   cart:{
     type:Array,
+  },
+  order:{
+    type:Array,
   }
 });
 
