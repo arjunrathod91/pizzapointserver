@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 const MenuModel = require("./models/Menu");
 const UserModel = require("./models/User");
+const OrderModel = require("./models/AllOrders");
 const allItems = require("./data/menu");
 const { Password } = require("@mui/icons-material");
 require("dotenv").config();
@@ -80,6 +81,36 @@ app.put("/userDetail", async (req, res) => {
       .json({ message: "Error", error: error.message });
   }
 });
+
+//all orders
+
+app.post("/allOrders", (req, res) => {
+  try {
+    const userOrder = req.body;
+    console.log("Received new order:",userOrder);
+    OrderModel.create(userOrder);
+  } catch (error) {
+    console.error("Error", error);
+    res
+      .status(500)
+      .json({ message: "Error", error: error.message });
+  }
+});
+
+
+app.get("/allOrders", async (req, res) => {
+  try {
+    const order = await OrderModel.find();
+    res.json(order);
+    console.log(order);
+  } catch (error) {
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ message: "Error", error: error.message });
+  }
+});
+
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
