@@ -6,7 +6,6 @@ const MenuModel = require("./models/Menu");
 const UserModel = require("./models/User");
 const OrderModel = require("./models/AllOrders");
 const allItems = require("./data/menu");
-const { Password } = require("@mui/icons-material");
 require("dotenv").config();
 
 app.use(cors());
