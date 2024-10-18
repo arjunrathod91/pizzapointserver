@@ -81,6 +81,21 @@ app.put("/userDetail", async (req, res) => {
   }
 });
 
+//login
+
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  // Assuming you have a User model in MongoDB
+  const user = await UserModel.findOne({ email,password });
+
+  if (user) {
+    res.json({ success: true });
+  } else {
+    res.json({ success: false });
+  }
+});
+
 //all orders
 
 app.post("/allOrders", (req, res) => {
