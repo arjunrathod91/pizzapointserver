@@ -111,23 +111,26 @@ app.get("/allOrders", async (req, res) => {
   }
 });
 
-// app.post("/allOrders", (req, res) => {
-//   try {
-//     const userOrder = req.body;
-//     console.log("Received new order:",userOrder);
-//     OrderModel.create(userOrder);
-//   } catch (error) {
-//     console.error("Error", error);
-//     res
-//       .status(500)
-//       .json({ message: "Error", error: error.message });
-//   }
-// });
+app.post("/allOrders", async (req, res) => {
+  try {
+    const { _id, ...orderData } = req.body; // Remove _id if it's passed in the request
+    
+    console.log("orders are going there:", orderData);
+
+    // Insert order into database
+    const result = await OrderModel.create(orderData);
+    
+    res.status(201).json({ message: "Order created successfully", data: result });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Error", error: error.message });
+  }
+});
 
 app.post("/newOrder", (req, res) => {
   try {
     const userOrder = req.body;
-    console.log("Received new order:",userOrder);
+    console.log("tan tana tan tara:",userOrder);
     NewOrderModel.create(userOrder);
   } catch (error) {
     console.error("Error", error);
