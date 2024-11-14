@@ -155,6 +155,24 @@ app.get("/newOrder", async (req, res) => {
   }
 });
 
+app.delete("/newOrder", async (req, res) => {
+  try {
+    const { id } = req.body; // assuming you're sending the ID in the body of the request
+    if (!id) {
+      return res.status(400).json({ message: "Order ID is required" });
+    }
+    
+    const result = await NewOrderModel.findByIdAndDelete(id);
+    if (!result) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.status(200).json({ message: "Order deleted successfully", result });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Error", error: error.message });
+  }
+});
 
 
 const PORT = process.env.PORT;
