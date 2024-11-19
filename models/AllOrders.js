@@ -18,6 +18,9 @@ const OrderSchema = new mongoose.Schema({
   },
   order:{
     type:Array,
+  },
+  total:{
+    type:Number
   }
 });
 
