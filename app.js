@@ -61,6 +61,24 @@ app.get("/userDetail", async (req, res) => {
   }
 });
 
+//currently working how user dont need to login again and again
+
+// app.get("/userDetail", async (req, res) => {
+//   try {
+//     const { email,password} = req.body;
+//     const user = await UserModel.findOne({ email, password });
+//     res.json(user);
+//     console.log(user);
+//   } catch (error) {
+//     console.error("Error:", error);
+//     res
+//       .status(500)
+//       .json({ message: "Error", error: error.message });
+//   }
+// });
+
+
+
 //for order
 
 app.put("/userDetail", async (req, res) => {
@@ -89,7 +107,8 @@ app.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email, password });
     if (user) {
-      res.json({ success: true });
+      // res.json({ success: true });
+      res.json(user);
     } else {
       res.json({ success: false, message: 'Invalid email or password' });
     }
