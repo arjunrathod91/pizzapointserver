@@ -35,6 +35,43 @@ app.get("/allItems", async (req, res) => {
   }
 });
 
+
+//putting item details
+
+app.put("/allItems/:id", async (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+
+  try {
+    const updatedItem = await MenuModel.findByIdAndUpdate(id, updatedData, { new: true });
+    res.status(200).json(updatedItem);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update item" });
+  }
+});
+
+app.delete("/allItems", async (req, res) => {
+  try {
+    const { id } = req.body; // assuming you're sending the ID in the body of the request
+    if (!id) {
+      return res.status(400).json({ message: "Order ID is required" });
+    }
+    
+    const result = await MenuModel.findByIdAndDelete(id);
+    if (!result) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.status(200).json({ message: "Order deleted successfully", result });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Error", error: error.message });
+  }
+});
+
+
+
+
 app.post("/userDetail", (req, res) => {
   try {
     const profileDetails = req.body;
