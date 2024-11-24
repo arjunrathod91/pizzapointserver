@@ -23,6 +23,17 @@ mongoose
     console.error("Error connecting to MongoDB:", err);
   });
 
+app.post("/allItems", (req, res) => {
+  try {
+    const newItems = req.body;
+    console.log("Received new item:", newItems);
+    MenuModel.create(newItems);
+  } catch (error) {
+    console.error("Error", error);
+    res.status(500).json({ message: "Error", error: error.message });
+  }
+});
+
 app.get("/allItems", async (req, res) => {
   try {
     const orders = await MenuModel.find();
@@ -35,7 +46,6 @@ app.get("/allItems", async (req, res) => {
   }
 });
 
-
 //putting item details
 
 app.put("/allItems/:id", async (req, res) => {
@@ -43,7 +53,9 @@ app.put("/allItems/:id", async (req, res) => {
   const updatedData = req.body;
 
   try {
-    const updatedItem = await MenuModel.findByIdAndUpdate(id, updatedData, { new: true });
+    const updatedItem = await MenuModel.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
     res.status(200).json(updatedItem);
   } catch (error) {
     res.status(500).json({ error: "Failed to update item" });
@@ -56,7 +68,7 @@ app.delete("/allItems", async (req, res) => {
     if (!id) {
       return res.status(400).json({ message: "Order ID is required" });
     }
-    
+
     const result = await MenuModel.findByIdAndDelete(id);
     if (!result) {
       return res.status(404).json({ message: "Order not found" });
@@ -69,9 +81,6 @@ app.delete("/allItems", async (req, res) => {
   }
 });
 
-
-
-
 app.post("/userDetail", (req, res) => {
   try {
     const profileDetails = req.body;
@@ -79,9 +88,7 @@ app.post("/userDetail", (req, res) => {
     UserModel.create(profileDetails);
   } catch (error) {
     console.error("Error", error);
-    res
-      .status(500)
-      .json({ message: "Error", error: error.message });
+    res.status(500).json({ message: "Error", error: error.message });
   }
 });
 
@@ -92,9 +99,7 @@ app.get("/userDetail", async (req, res) => {
     console.log(user);
   } catch (error) {
     console.error("Error:", error);
-    res
-      .status(500)
-      .json({ message: "Error", error: error.message });
+    res.status(500).json({ message: "Error", error: error.message });
   }
 });
 
@@ -114,13 +119,11 @@ app.get("/userDetail", async (req, res) => {
 //   }
 // });
 
-
-
 //for order
 
 app.put("/userDetail", async (req, res) => {
   try {
-    const { email, password,cart, order } = req.body;
+    const { email, password, cart, order } = req.body;
     const user = await UserModel.findOne({ email, password });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -131,15 +134,13 @@ app.put("/userDetail", async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.error("Error:", error);
-    res
-      .status(500)
-      .json({ message: "Error", error: error.message });
+    res.status(500).json({ message: "Error", error: error.message });
   }
 });
 
 //login
 
-app.post('/login', async (req, res) => {
+app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email, password });
@@ -147,14 +148,13 @@ app.post('/login', async (req, res) => {
       // res.json({ success: true });
       res.json(user);
     } else {
-      res.json({ success: false, message: 'Invalid email or password' });
+      res.json({ success: false, message: "Invalid email or password" });
     }
   } catch (error) {
     console.error("Server error:", error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
-
 
 app.get("/allOrders", async (req, res) => {
   try {
@@ -163,22 +163,22 @@ app.get("/allOrders", async (req, res) => {
     console.log(order);
   } catch (error) {
     console.error("Error:", error);
-    res
-      .status(500)
-      .json({ message: "Error", error: error.message });
+    res.status(500).json({ message: "Error", error: error.message });
   }
 });
 
 app.post("/allOrders", async (req, res) => {
   try {
     const { _id, ...orderData } = req.body; // Remove _id if it's passed in the request
-    
+
     console.log("orders are going there:", orderData);
 
     // Insert order into database
     const result = await OrderModel.create(orderData);
-    
-    res.status(201).json({ message: "Order created successfully", data: result });
+
+    res
+      .status(201)
+      .json({ message: "Order created successfully", data: result });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ message: "Error", error: error.message });
@@ -188,13 +188,11 @@ app.post("/allOrders", async (req, res) => {
 app.post("/newOrder", (req, res) => {
   try {
     const userOrder = req.body;
-    console.log("tan tana tan tara:",userOrder);
+    console.log("tan tana tan tara:", userOrder);
     NewOrderModel.create(userOrder);
   } catch (error) {
     console.error("Error", error);
-    res
-      .status(500)
-      .json({ message: "Error", error: error.message });
+    res.status(500).json({ message: "Error", error: error.message });
   }
 });
 
@@ -205,9 +203,7 @@ app.get("/newOrder", async (req, res) => {
     console.log(order);
   } catch (error) {
     console.error("Error:", error);
-    res
-      .status(500)
-      .json({ message: "Error", error: error.message });
+    res.status(500).json({ message: "Error", error: error.message });
   }
 });
 
@@ -217,7 +213,7 @@ app.delete("/newOrder", async (req, res) => {
     if (!id) {
       return res.status(400).json({ message: "Order ID is required" });
     }
-    
+
     const result = await NewOrderModel.findByIdAndDelete(id);
     if (!result) {
       return res.status(404).json({ message: "Order not found" });
@@ -229,9 +225,6 @@ app.delete("/newOrder", async (req, res) => {
     res.status(500).json({ message: "Error", error: error.message });
   }
 });
-
-
-
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
