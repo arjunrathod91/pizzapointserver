@@ -23,17 +23,6 @@ mongoose
     console.error("Error connecting to MongoDB:", err);
   });
 
-app.post("/allItems", (req, res) => {
-  try {
-    const newItems = req.body;
-    console.log("Received new item:", newItems);
-    MenuModel.create(newItems);
-  } catch (error) {
-    console.error("Error", error);
-    res.status(500).json({ message: "Error", error: error.message });
-  }
-});
-
 app.get("/allItems", async (req, res) => {
   try {
     const orders = await MenuModel.find();

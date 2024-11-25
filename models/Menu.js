@@ -24,6 +24,9 @@ const MenuSchema = new mongoose.Schema({
   },
   tag:{
     type: String,
+  },
+  display:{
+    type: String,
   }
 });
 
