@@ -1,11 +1,10 @@
 // seedMenu.js
-
+require("dotenv").config({ path: "../.env" });
 const mongoose = require("mongoose");
 const MenuModel = require("../models/Menu"); // Adjust the path if necessary
 const allItems = require("../data/menu"); // Path to your menu data
 
 // Load environment variables
-require('dotenv').config();
 
 // MongoDB connection URI from environment variables
 const dbURI = process.env.MONGO_URI;
@@ -13,7 +12,7 @@ const dbURI = process.env.MONGO_URI;
 // Function to seed the database
 const seedDB = async () => {
   try {
-    await mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(dbURI);
     console.log("Connected to MongoDB for seeding.");
 
     // Check for existing items to prevent duplicates
