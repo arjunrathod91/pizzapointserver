@@ -133,16 +133,27 @@ app.put("/userDetail", async (req, res) => {
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+
     const user = await UserModel.findOne({ email, password });
+
     if (user) {
-      // res.json({ success: true });
-      res.json(user);
+      res.json({
+        success: true,
+        user: user
+      });
     } else {
-      res.json({ success: false, message: "Invalid email or password" });
+      res.json({
+        success: false,
+        message: "Invalid email or password"
+      });
     }
+
   } catch (error) {
     console.error("Server error:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(500).json({
+      success: false,
+      message: "Internal server error"
+    });
   }
 });
 
@@ -216,7 +227,7 @@ app.delete("/newOrder", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
