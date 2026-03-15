@@ -6,6 +6,7 @@ const MenuModel = require("./models/Menu");
 const UserModel = require("./models/User");
 const OrderModel = require("./models/AllOrders");
 const NewOrderModel = require("./models/NewOrder");
+const ReviewModel = require("./models/Reviews");
 const allItems = require("./data/menu");
 require("dotenv").config();
 
@@ -251,6 +252,29 @@ app.delete("/newOrder", async (req, res) => {
     res.status(500).json({ message: "Error", error: error.message });
   }
 });
+
+app.get("/reviews", async (req, res) => {
+  try {
+    const review = await ReviewModel.find();
+    res.json(review);
+    console.log(review);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Error", error: error.message });
+  }
+});
+
+app.post("/reviews", (req, res) => {
+  try {
+    const newReview = req.body;
+    console.log("tan tana tan tara:", newReview);
+    ReviewModel.create(newReview);
+  } catch (error) {
+    console.error("Error", error);
+    res.status(500).json({ message: "Error", error: error.message });
+  }
+});
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
