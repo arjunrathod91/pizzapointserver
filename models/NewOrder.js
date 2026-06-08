@@ -7,9 +7,9 @@ const NewOrderSchema = new mongoose.Schema({
   email:{
     type: String,
   },
-  password:{
-    type: String,
-  },
+  // password:{
+  //   type: String,
+  // },
   contact:{
     type: String,
   },
@@ -26,7 +26,16 @@ const NewOrderSchema = new mongoose.Schema({
     type:String
   },
   date:{
-    type:Object
+    type:String
+  },
+  time:{
+    type:String
+  },
+  orderType:{
+    type:String
+  },
+  orderStatus:{
+    type:String
   }
 
 });
