@@ -27,6 +27,15 @@ const OrderSchema = new mongoose.Schema({
   },
   date:{
     type:Object
+  },
+  time:{
+    type:String
+  },
+  orderType:{
+    type:String
+  },
+  orderStatus:{
+    type:String
   }
 });
 
